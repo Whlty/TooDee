@@ -15,5 +15,6 @@ MonoBehaviour:
   itemName: Testing Sword 2
   itemDesc: For More Testing.
   itemIcon: {fileID: 21300000, guid: 318bd96834fe9f843a4fdfd03615b0ae, type: 3}
+  sellCost: 100
   damage: 1
   cooldown: 0.05

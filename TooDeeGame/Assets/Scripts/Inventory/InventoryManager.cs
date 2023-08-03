@@ -9,18 +9,22 @@ public class InventoryManager : MonoBehaviour
     [SerializeField] private GameObject open, close, orientation;
     [SerializeField] private GameObject slotHolder;
     [SerializeField] private ItemClass[] startingItems;
-    [SerializeField] private GameObject cursor;
-    private KeyCode toggleInventory;
+    [SerializeField] private GameObject cursor, hover;
+    [SerializeField] private TextMeshProUGUI hoverName, hoverDesc;
+    [SerializeField] private KeyCode toggleInventory;
+    [SerializeField] private GameObject equipButton, sellButton;
+    [SerializeField] private PlayerManager playerManager;
+    [SerializeField] private GameObject mainItem;
     public GameObject hand;
     private bool inventoryEnabled;
     private GameObject[] slots;
     private SlotClass[] items;
-    private Transform currentPosition, endPosition;
+    private Transform endPosition;
     private SlotClass selectedSlot;
 
     private void Start()
     {
-        inventoryEnabled = true;
+        inventoryEnabled = false;
         // currentPosition = orientation.transform;
         // endPosition = close.transform;
 
@@ -38,8 +42,8 @@ public class InventoryManager : MonoBehaviour
             AddItem(startingItems[i]);   
         }
 
-        selectedSlot = null;
-        cursor.SetActive(false);
+        endPosition = close.transform;
+        DeselectSlot();
 
         UpdateUI();
     }
@@ -97,6 +101,13 @@ public class InventoryManager : MonoBehaviour
 
     private void Update()
     {
+        if (Input.GetKeyDown(toggleInventory))
+            ToggleInventory();
+
+        if (orientation.transform != endPosition.transform)
+            MoveInventory();
+
+
         if (!inventoryEnabled)
             return;
 
@@ -104,31 +115,82 @@ public class InventoryManager : MonoBehaviour
         {
             SelectSlot();
         }
+
+        if (selectedSlot == null)
+        {
+            UpdateDisplay(GetClosestSlot());
+        }
+    }
+
+    private void MoveInventory()
+    {
+        orientation.transform.position = Vector2.Lerp(orientation.transform.position, endPosition.position, Time.deltaTime * 10);
+    }
+
+    public void ToggleInventory()
+    {
+        inventoryEnabled = !inventoryEnabled;
+        if (inventoryEnabled)
+        {
+            endPosition = open.transform;
+        }
+        else
+        {
+            DeselectSlot();
+            endPosition = close.transform;
+        }
+    }
+
+    private void UpdateDisplay(SlotClass slot = null)
+    {
+        if (slot == null)
+        {
+            hover.SetActive(false);
+            return;
+        }
+
+        if (slot.GetItem() == null)
+        {
+            hover.SetActive(false);
+        }
+        else
+        {
+            hover.SetActive(true);
+            hoverName.text = slot.GetItem().itemName;
+            hoverDesc.text = slot.GetItem().GetDescription();
+        }
+
+
     }
 
     private void SelectSlot()
     {
-        selectedSlot = GetClosestSlot();
+        SlotClass closest = GetClosestSlot();
 
-        if (GetClosestSlot() == null)
+        if (closest == null)
         {
-            DeselectSlot();
             return;
         }
-        if (GetClosestSlot().GetItem() == null)
+        else if (closest.GetItem() == null)
         {
-            DeselectSlot();
             return;
         }
 
+        selectedSlot = closest;
+        UpdateDisplay(selectedSlot);
         cursor.transform.position = GetClosestSlotPos().transform.position;
         cursor.SetActive(true);
+        equipButton.SetActive(true);
+        sellButton.SetActive(true);
     }
 
     private void DeselectSlot()
     {
+        equipButton.SetActive(false);
+        sellButton.SetActive(false);
         cursor.SetActive(false);
         selectedSlot = null;
+        hover.SetActive(false);
     }
 
     private SlotClass GetClosestSlot()
@@ -177,6 +239,46 @@ public class InventoryManager : MonoBehaviour
 
         return curSlot;
     }
+
+    public void SellItem(SlotClass _item)
+    {
+        if (_item == null)
+            return;
+            
+        // give coins
+        _item.Clear();
+        DeselectSlot();
+        UpdateUI();
+    }
+    public void EquipItem(SlotClass _item)
+    {
+        if (_item == null)
+            return;
+
+        ItemClass returnItem = mainItem.gameObject.GetComponent<ActiveSlot>().ChangeItem(_item.GetItem());
+        if (returnItem == null)
+        {
+            _item.Clear();
+        }
+        else
+        {
+            _item.ChangeItem(returnItem);
+        }
+        DeselectSlot();
+        UpdateUI();
+    }
+
+    public void SellSelectedItem()
+    {
+        SellItem(selectedSlot);
+    }
+
+    public void EquipSelectedItem()
+    {
+        EquipItem(selectedSlot);
+    }
+
+
 
 
 

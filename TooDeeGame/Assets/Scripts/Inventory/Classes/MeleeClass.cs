@@ -6,9 +6,6 @@ using System.Text;
 public class MeleeClass : ItemClass
 {
     public float damage;
-    public float cooldown;
-
-
     public override void Use(PlayerManager caller)
     {
         Debug.Log("use melee");
@@ -19,13 +16,16 @@ public class MeleeClass : ItemClass
     {
         StringBuilder sb = new();
         sb.Append(itemDesc);
+        sb.Append("\n");
         if (damage != 0)
         {
+            sb.Append("\n");
             sb.Append("Damage: ");
             sb.Append(damage);
         }
         if (cooldown != 0)
         {
+            sb.Append("\n");
             sb.Append("Cooldown: ");
             sb.Append(cooldown);
         }

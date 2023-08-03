@@ -8,6 +8,8 @@ public class ItemClass : ScriptableObject
     [TextArea]
     public string itemDesc;
     public Sprite itemIcon;
+    public float sellCost;
+    public float cooldown;
 
     public virtual void Use(PlayerManager caller)
     {
@@ -18,6 +20,7 @@ public class ItemClass : ScriptableObject
     {
         StringBuilder sb = new();
         sb.Append(itemDesc);
+        sb.Append("\n");
         return sb.ToString();
     }
 

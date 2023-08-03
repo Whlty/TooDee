@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a5fde6fee06eea84ba6b397a7dd10902, type: 3}
-  m_Name: Sword
+  m_Name: Default
   m_EditorClassIdentifier: 
-  itemName: Testing Sword
-  itemDesc: Test item.
-  itemIcon: {fileID: 21300000, guid: 53d341df3ef6e01409d1115d8b762daa, type: 3}
-  sellCost: 50
-  damage: 10
-  cooldown: 0.75
+  itemName: Default Fists
+  itemDesc: When you have nothing equipped.
+  itemIcon: {fileID: 21300000, guid: c2dd2c1087271ff4c861481a98482fce, type: 3}
+  sellCost: 0
+  damage: 5
+  cooldown: 1
