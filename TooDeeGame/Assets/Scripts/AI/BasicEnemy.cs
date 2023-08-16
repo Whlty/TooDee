@@ -6,4 +6,5 @@ using UnityEngine.AI;
 public class BasicEnemy : MonoBehaviour
 {
     
+    
 }

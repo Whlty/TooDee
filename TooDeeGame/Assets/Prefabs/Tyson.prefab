@@ -93,7 +93,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7859043343460462633}
-  - component: {fileID: 2029757490748581744}
   - component: {fileID: 8175536997264303111}
   - component: {fileID: 7871187512506641010}
   m_Layer: 0
@@ -119,28 +118,6 @@ Transform:
   - {fileID: 5894528908811842377}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!195 &2029757490748581744
-NavMeshAgent:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9132743745026323950}
-  m_Enabled: 1
-  m_AgentTypeID: 0
-  m_Radius: 0.4
-  m_Speed: 3.5
-  m_Acceleration: 8
-  avoidancePriority: 50
-  m_AngularSpeed: 120
-  m_StoppingDistance: 0
-  m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
-  m_AutoRepath: 1
-  m_Height: 1
-  m_BaseOffset: 0.525
-  m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
 --- !u!58 &8175536997264303111
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -188,3 +165,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1078c3798fe78664fbda9acd6f3d5c09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stats: {fileID: 11400000, guid: 28a670d77697b2444bf5adc72aff4d5d, type: 2}

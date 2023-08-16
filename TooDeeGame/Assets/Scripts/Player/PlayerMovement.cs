@@ -9,9 +9,12 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private SpriteRenderer model;
     [SerializeField] private Camera playerCamera;
     private float x, y, scroll, zoomLevel;
+    private Rigidbody2D rigidbody2D;
+    private Vector3 moveDirection;
 
     private void Start()
     {
+        rigidbody2D = GetComponent<Rigidbody2D>();
         zoomLevel = playerCamera.orthographicSize;
     }
     private void Update()
@@ -20,9 +23,7 @@ public class PlayerMovement : MonoBehaviour
         // y = 1 (w) y = 0 (nothing) y = -1 (s)
         x = Input.GetAxisRaw("Horizontal");
         y = Input.GetAxisRaw("Vertical");
-
-        transform.position += Vector3.right * moveSpeed * x * Time.deltaTime;
-        transform.position += Vector3.up * moveSpeed * y * Time.deltaTime;
+        moveDirection = new Vector3(x,y).normalized;
 
         scroll = Input.GetAxisRaw("Mouse ScrollWheel");
 
@@ -40,6 +41,11 @@ public class PlayerMovement : MonoBehaviour
             ZoomCamera(scroll);
         }
 
+    }
+
+    private void FixedUpdate()
+    {
+        rigidbody2D.velocity = moveDirection * moveSpeed;
     }
 
     private void ZoomCamera(float direction)
