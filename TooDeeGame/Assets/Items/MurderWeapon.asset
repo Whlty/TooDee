@@ -12,9 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5fde6fee06eea84ba6b397a7dd10902, type: 3}
   m_Name: MurderWeapon
   m_EditorClassIdentifier: 
-  itemName: Testing Sword 2
-  itemDesc: For More Testing.
+  itemName: Testing Dagger
+  itemDesc: 'For more testing.
+
+    Small aoe.
+
+    Low damage.
+
+    Very short cooldown.'
   itemIcon: {fileID: 21300000, guid: 318bd96834fe9f843a4fdfd03615b0ae, type: 3}
-  sellCost: 100
   damage: 1
+  critChance: 10
   cooldown: 0.05
+  sellCost: 100
+  attack: 2

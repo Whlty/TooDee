@@ -11,6 +11,7 @@ public class ActiveSlot : MonoBehaviour
     [SerializeField] private ItemClass defaultItem;
     [SerializeField] private TextMeshProUGUI cooldownText;
     [SerializeField] private GameObject panel;
+    [SerializeField] private SpriteRenderer mainHandSprite;
     private PlayerManager player;
     private float curCooldown = 0;
 
@@ -41,6 +42,10 @@ public class ActiveSlot : MonoBehaviour
 
         item = _item;
         GetComponent<Image>().sprite = _item.itemIcon;
+
+        if (mainHandSprite != null)
+            mainHandSprite.sprite = _item.itemIcon;
+
         return curItem;
     }
 

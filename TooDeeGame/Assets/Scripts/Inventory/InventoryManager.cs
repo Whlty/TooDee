@@ -15,12 +15,14 @@ public class InventoryManager : MonoBehaviour
     [SerializeField] private GameObject equipButton, sellButton;
     [SerializeField] private PlayerManager playerManager;
     [SerializeField] private GameObject mainItem;
+    [SerializeField] private TextMeshProUGUI value;
     public GameObject hand;
     private bool inventoryEnabled;
     private GameObject[] slots;
     private SlotClass[] items;
     private Transform endPosition;
     private SlotClass selectedSlot;
+
 
     private void Start()
     {
@@ -173,6 +175,13 @@ public class InventoryManager : MonoBehaviour
         }
         else if (closest.GetItem() == null)
         {
+            DeselectSlot();
+            return;
+        }
+        else if (closest == selectedSlot)
+        {
+            EquipItem(selectedSlot);
+            DeselectSlot();
             return;
         }
 
@@ -182,6 +191,7 @@ public class InventoryManager : MonoBehaviour
         cursor.SetActive(true);
         equipButton.SetActive(true);
         sellButton.SetActive(true);
+        value.text = "Sell Value\n$" + closest.GetItem().sellCost.ToString();
     }
 
     private void DeselectSlot()
@@ -191,6 +201,7 @@ public class InventoryManager : MonoBehaviour
         cursor.SetActive(false);
         selectedSlot = null;
         hover.SetActive(false);
+        value.text = "";
     }
 
     private SlotClass GetClosestSlot()
@@ -245,7 +256,7 @@ public class InventoryManager : MonoBehaviour
         if (_item == null)
             return;
             
-        // give coins
+        playerManager.moneyManager.GainMoney(_item.GetItem().sellCost);
         _item.Clear();
         DeselectSlot();
         UpdateUI();
@@ -255,7 +266,24 @@ public class InventoryManager : MonoBehaviour
         if (_item == null)
             return;
 
-        ItemClass returnItem = mainItem.gameObject.GetComponent<ActiveSlot>().ChangeItem(_item.GetItem());
+        switch (_item.GetItem().GetType().ToString())
+        {
+            case "MeleeClass":
+                SwitchMelee(_item);
+                break;
+            case "ItemClass":
+                DeselectSlot();
+                playerManager.titleManager.NewTitle("This item cannot be equipped!", 2f,1f,Color.red);
+                break;
+            default:
+                return;   
+        }
+    }
+    private void SwitchMelee(SlotClass _item)
+    {
+        ItemClass returnItem = mainItem.GetComponent<ActiveSlot>().ChangeItem(_item.GetItem());
+        playerManager.statsManager.ChangeItem(_item.GetItem(), returnItem);
+
         if (returnItem == null)
         {
             _item.Clear();
@@ -266,6 +294,7 @@ public class InventoryManager : MonoBehaviour
         }
         DeselectSlot();
         UpdateUI();
+
     }
 
     public void SellSelectedItem()

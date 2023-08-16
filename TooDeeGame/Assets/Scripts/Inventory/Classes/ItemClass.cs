@@ -8,8 +8,11 @@ public class ItemClass : ScriptableObject
     [TextArea]
     public string itemDesc;
     public Sprite itemIcon;
-    public float sellCost;
+    public float damage;
+    public float critChance;
     public float cooldown;
+    public float sellCost;
+
 
     public virtual void Use(PlayerManager caller)
     {

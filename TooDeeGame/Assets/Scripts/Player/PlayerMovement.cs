@@ -40,10 +40,6 @@ public class PlayerMovement : MonoBehaviour
             ZoomCamera(scroll);
         }
 
-
-        
-
-
     }
 
     private void ZoomCamera(float direction)

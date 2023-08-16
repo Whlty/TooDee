@@ -9,18 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a5fde6fee06eea84ba6b397a7dd10902, type: 3}
-  m_Name: Default
+  m_Script: {fileID: 11500000, guid: d7cf6b801b380b643a85cd66827e50ce, type: 3}
+  m_Name: TestItem
   m_EditorClassIdentifier: 
-  itemName: Default Fists
-  itemDesc: 'When you have nothing equipped.
-
-    No added stats.
-
-    1 second cooldown.'
-  itemIcon: {fileID: 21300000, guid: c2dd2c1087271ff4c861481a98482fce, type: 3}
+  itemName: TestItem
+  itemDesc: Test item class, to see if parent class breaks anything
+  itemIcon: {fileID: 21300000, guid: dfef0bc34d845ce41b7265f35ae3c025, type: 3}
   damage: 0
   critChance: 0
-  cooldown: 1
+  cooldown: 0
   sellCost: 0
-  attack: 5
